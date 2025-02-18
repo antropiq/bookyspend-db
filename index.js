@@ -7,7 +7,6 @@ const Database = class {
     "1b2de87b967946a733746b9c2a07dd4ddebc688576c9faee38d03b9d375519e2";
 
   constructor(path, dbkey, useEncryption) {
-    logging.log("Database:ctor", "debug", `database path is ${path}`);
     this.path = `${path}`;
     this.dbContent = new Map();
     this.useEncryption = useEncryption || false;
@@ -20,14 +19,10 @@ const Database = class {
     } else {
       this.readFromDB()
         .then(() => {
-          logging.log("Database:ctor", "debug", "Database is loaded");
+          console.debug("database is loaded");
         })
         .catch((err) => {
-          logging.log(
-            "Database:ctor",
-            "error",
-            `Error loading database: ${err}`
-          );
+          throw new Error(`Database:ctor Error loading database: ${err}`);
         });
     }
   }
@@ -70,11 +65,6 @@ const Database = class {
             });
           }
 
-          logging.log(
-            "Database::load",
-            "debug",
-            `Returning ${filteredDocs.length} documents`
-          );
           resolve(filteredDocs.length > 0 ? filteredDocs : []);
         } catch (parseErr) {
           reject(
@@ -105,18 +95,8 @@ const Database = class {
             resolve(doc);
           });
         } else {
-          logging.log(
-            "Database::save",
-            "debug",
-            `Updating object with id ${content._id}`
-          );
           // Update existing document
           const existingDoc = this.dbContent.get(content._id);
-          logging.log(
-            "Database::save",
-            "debug",
-            `indexed document content is ${JSON.stringify(existingDoc)}`
-          );
           if (existingDoc) {
             Object.assign(existingDoc, content);
             this.writeToDB().then(() => {
@@ -135,11 +115,6 @@ const Database = class {
   delete(id, bulk) {
     bulk = bulk || "no";
     return new Promise((resolve, reject) => {
-      logging.log(
-        "Database::delete",
-        "debug",
-        `Deleting item with id ${id}...`
-      );
       try {
         const existingDoc = this.dbContent.get(id);
         if (!existingDoc) {
@@ -149,11 +124,6 @@ const Database = class {
           if (bulk === "no") {
             this.writeToDB()
               .then(() => {
-                logging.log(
-                  "Database::delete",
-                  "debug",
-                  "Item as been removed!"
-                );
               })
               .catch((err) => {
                 reject(err);
@@ -186,11 +156,6 @@ const Database = class {
             // ok flush to file
             this.writeToDB()
               .then(() => {
-                logging.log(
-                  "Database::delete",
-                  "debug",
-                  "Items matching criterias have been removed!"
-                );
               })
               .catch((err) => {
                 reject(err);
