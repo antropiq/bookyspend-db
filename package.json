@@ -1,0 +1,27 @@
+{
+  "name": "bookyspend-db",
+  "version": "1.0.0",
+  "description": "Json based documents databae",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/antropiq/bookyspend-db.git"
+  },
+  "keywords": [
+    "NoSQL",
+    "Database",
+    "Javascript"
+  ],
+  "author": "bookyspend@gmail.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/antropiq/bookyspend-db/issues"
+  },
+  "homepage": "https://github.com/antropiq/bookyspend-db#readme",
+  "dependencies": {
+    "uuid": "^11.0.5"
+  }
+}
