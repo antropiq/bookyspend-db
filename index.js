@@ -7,7 +7,7 @@ const Database = class {
     "1b2de87b967946a733746b9c2a07dd4ddebc688576c9faee38d03b9d375519e2";
 
   constructor(path, dbkey, useEncryption) {
-    this.path = `${path}`;
+    this.path = path;
     this.dbContent = new Map();
     this.useEncryption = useEncryption || false;
     this.dbkey = dbkey || Database.DBKEY;
